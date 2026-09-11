@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.pistebuddy.app",
+      "sha256_cert_fingerprints": [
+        "6E:DF:CC:2E:AC:D3:90:27:F5:E7:92:08:F5:CE:EB:F0:22:85:7B:69:ED:BC:3D:D3:77:C4:84:1F:6E:C8:95:9A"
+      ]
+    }
+  }
+]
