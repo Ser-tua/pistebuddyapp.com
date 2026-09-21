@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["NL74PV6GPM.com.pistebuddy.app"],
+        "components": [
+          { "/": "/add/*", "comment": "Friend invite: https://link.pistebuddyapp.com/add/<token>" }
+        ]
+      }
+    ]
+  }
+}
