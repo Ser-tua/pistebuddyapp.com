@@ -9,4 +9,19 @@ This is the public static site behind PisteBuddy's Android App Links (`.well-kno
 
 No `A` records, and nothing at `@` — the apex keeps whatever it already has for Squarespace.
 
-**Before the store build:** `assetlinks.json` currently carries only the Android **debug** keystore's SHA-256 certificate fingerprint (`~/.android/debug.keystore`, alias `androiddebugkey`). The **release** signing certificate's fingerprint (from `eas credentials` once EAS Build is set up) must be added to the `sha256_cert_fingerprints` array before the store build, or App Links verification will fail on release-signed installs.
+**Two fingerprints are listed today, and NEITHER is the release one:**
+
+1. `6E:DF:CC:2E…` — this machine's Android **debug** keystore (`~/.android/debug.keystore`, alias `androiddebugkey`), i.e. a local `expo run:android` build.
+2. `FA:C6:17:45…` — the **EAS-built dev client** installed on the test device, added 2026-09-23. Added because the two are not the same key, and the phone was running the EAS build: Android reported `link.pistebuddyapp.com: 1024` (STATE_DENIED) with the domain **Disabled**, so a shared invite link opened Chrome instead of the app. Everything else about the link worked — the share sheet, the token, this page, and the app's own parsing of the URL when it was handed one.
+
+**Before the store build:** the **release** signing certificate's fingerprint (from `eas credentials`) must be added to the `sha256_cert_fingerprints` array, or App Links verification will fail on release-signed installs. Neither of the two above covers it.
+
+**To re-check verification on a device after changing this file:**
+
+```
+adb shell pm set-app-links --package com.pistebuddy.app 0 all
+adb shell pm verify-app-links --re-verify com.pistebuddy.app
+adb shell dumpsys package d | grep -A 6 com.pistebuddy.app
+```
+
+`1024` is denied, `2` is verified. Android caches the result, so the re-verify is required — editing this file alone changes nothing on a phone that has already asked.

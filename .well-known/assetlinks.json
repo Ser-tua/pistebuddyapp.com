@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.pistebuddy.app",
       "sha256_cert_fingerprints": [
-        "6E:DF:CC:2E:AC:D3:90:27:F5:E7:92:08:F5:CE:EB:F0:22:85:7B:69:ED:BC:3D:D3:77:C4:84:1F:6E:C8:95:9A"
+        "6E:DF:CC:2E:AC:D3:90:27:F5:E7:92:08:F5:CE:EB:F0:22:85:7B:69:ED:BC:3D:D3:77:C4:84:1F:6E:C8:95:9A",
+        "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C"
       ]
     }
   }
