@@ -25,3 +25,19 @@ adb shell dumpsys package d | grep -A 6 com.pistebuddy.app
 ```
 
 `1024` is denied, `2` is verified. Android caches the result, so the re-verify is required — editing this file alone changes nothing on a phone that has already asked.
+
+## `/get/` — the flyer's "get the app" page (added 2026-09-30)
+
+One QR code for every phone: `https://link.pistebuddyapp.com/get/?src=<campaign>` sends an iPhone or
+iPad to the App Store and an Android phone to Google Play, and shows a page with both badges (and a QR
+code) on a computer. **While a store's address is empty it says "Coming soon for the 2026/27 season"
+and sends nobody there.** Keep the trailing slash in printed codes: Pages serves the folder's page
+there with no redirect.
+
+- `get-assets/config.js` — **the only place the store addresses and Apple's `pt` token live.** Fill
+  them in at launch and push; printed flyers switch over by themselves.
+- `get-assets/platform.js` — detection and store links; `node --test get-assets/platform.test.js`
+  (also fails if the `<noscript>` links in `get/index.html` drift from `config.js`).
+- `?src=` becomes `ct=` on the App Store and `referrer=utm_source%3D<src>%26utm_medium%3Dqr` on Play.
+- The printable QR codes are made in the app repo: `npm run qr -- --src=<campaign>` (`marketing/qr/`).
+- Nothing here touches `/add/` or `.well-known/`: the Apple file claims `/add/*` only.

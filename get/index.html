@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Get PisteBuddy</title>
+<meta name="description" content="Ski and snowboard navigation for iPhone and Android.">
+<link rel="icon" href="/get-assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;700&family=Host+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+<!-- Served at /get/ by GitHub Pages as a folder index: no redirect, so ?src= arrives untouched
+     (/get without the slash also works, through Pages' own redirect). The store
+     addresses live in /get-assets/config.js and nowhere else. Palette and faces are the app's and
+     pistebuddy.online's (CLAUDE.md). -->
+<style>
+  :root {
+    --violet: #8780D4; --violet-dark: #766FBD; --violet-tint: #EDECF8;
+    --card: #FBFBFB; --bg: #F4F4F7; --ink: #3F3F3F; --muted: #8E8C9C; --line: #E7E7E7;
+    --display: "Host Grotesk", "Albert Sans", system-ui, sans-serif;
+    --body: "Albert Sans", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light only; }
+  html.redirecting body { visibility: hidden; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+         padding: 24px 16px; background: var(--bg); color: var(--ink); font: 17px/1.5 var(--body); }
+  main { width: 100%; max-width: 420px; background: var(--card); border-radius: 30px; padding: 32px 24px 28px;
+         box-shadow: 0 4px 40px rgba(40, 70, 110, .12); text-align: center; }
+  .icon { width: 72px; height: 72px; border-radius: 50%; display: block; margin: 0 auto 16px; } /* the image is a violet disc on black */
+  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 7vw, 2.1rem); line-height: 1.12;
+       letter-spacing: -0.01em; margin: 0 0 8px; }
+  .lede { color: var(--muted); margin: 0 0 24px; }
+  .stores { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .badge { display: inline-block; line-height: 0; border-radius: 8px; }
+  .badge img { height: 48px; width: auto; }
+  .badge.play img { height: 70px; margin: -11px 0; } /* Google's PNG carries its own padding */
+  .soon { display: inline-block; background: var(--violet-tint); color: var(--violet-dark); font-weight: 500;
+          border-radius: 28px; padding: 10px 18px; font-size: 15px; }
+  .soon-store { color: var(--muted); font-size: 15px; margin: 0; }
+  .qr { margin: 28px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+  .qr p { margin: 0 0 12px; color: var(--muted); font-size: 15px; }
+  .qr img { width: 168px; height: 168px; display: block; margin: 0 auto; background: #fff; border-radius: 12px; }
+  .more { margin: 24px 0 0; font-size: 15px; }
+  a { color: var(--violet-dark); }
+  a:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+  [hidden] { display: none !important; }
+</style>
+<script src="/get-assets/config.js"></script>
+<script src="/get-assets/platform.js"></script>
+<script>
+  // Decided here, in <head>, before the page is drawn: a phone whose store is live never sees it.
+  // location.replace leaves this page out of the history, so Back does not bounce into the store again.
+  (function () {
+    var d;
+    try {
+      d = PBGet.decide(
+        { userAgent: navigator.userAgent, platform: navigator.platform, maxTouchPoints: navigator.maxTouchPoints },
+        PB_GET_CONFIG,
+        location.search
+      );
+    } catch (e) { return; } // anything wrong: the page shows, with its links
+    window.PB_GET_DECISION = d;
+    if (d.action === 'redirect') {
+      document.documentElement.className = 'redirecting';
+      location.replace(d.url);
+      // Some in-app browsers refuse to open a store: after a moment, show the page instead.
+      setTimeout(function () { document.documentElement.className = ''; }, 2500);
+    }
+  })();
+</script>
+</head>
+<body>
+<main>
+  <img class="icon" src="/get-assets/icon.png" alt="" width="72" height="72">
+  <h1>Get PisteBuddy</h1>
+  <p class="lede">Ski and snowboard navigation for iPhone and Android.</p>
+
+  <div class="stores" id="stores">
+    <p class="soon" id="soon-both" hidden>Coming soon for the 2026/27 season</p>
+    <a class="badge" id="ios" hidden href="#"><img src="/get-assets/app-store-badge.svg" alt="Download on the App Store"></a>
+    <p class="soon-store" id="ios-soon" hidden>App Store: coming soon for the 2026/27 season</p>
+    <a class="badge play" id="android" hidden href="#"><img src="/get-assets/google-play-badge.png" alt="Get it on Google Play"></a>
+    <p class="soon-store" id="android-soon" hidden>Google Play: coming soon for the 2026/27 season</p>
+  </div>
+
+  <div class="qr" id="qr" hidden>
+    <p>On a computer? Scan with your phone.</p>
+    <img src="/get-assets/qr.svg" alt="QR code for this page">
+  </div>
+
+  <noscript>
+    <!-- Without JavaScript nothing can be decided, so both stores are listed. KEEP IN STEP WITH
+         config.js: platform.test.js fails if these disagree with it. A store with no address is a
+         <span>, never an <a> to nowhere. -->
+    <div class="stores">
+      <span class="soon-store" data-store="ios">App Store: coming soon for the 2026/27 season</span>
+      <span class="soon-store" data-store="android">Google Play: coming soon for the 2026/27 season</span>
+    </div>
+  </noscript>
+
+  <p class="more"><a href="https://pistebuddy.online">More about PisteBuddy</a></p>
+</main>
+<script>
+  (function () {
+    var d = window.PB_GET_DECISION;
+    if (!d) return; // the decision failed: the <noscript> block is not shown either, so say something
+    var show = function (id) { document.getElementById(id).hidden = false; };
+    if (!d.ios && !d.android) { show('soon-both'); return; }
+    if (d.ios) { document.getElementById('ios').href = d.ios; show('ios'); } else show('ios-soon');
+    if (d.android) { document.getElementById('android').href = d.android; show('android'); } else show('android-soon');
+    if (d.platform === 'other') show('qr');
+  })();
+</script>
+</body>
+</html>
