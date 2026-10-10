@@ -1,40 +1,67 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Open in PisteBuddy</title>
+<meta name="robots" content="noindex">
+<title>Friend invite · PisteBuddy</title>
+<link rel="icon" href="/get-assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;700&family=Host+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+<!-- The friend-invite fallback, served for every /add/<token> path (this file is both 404.html and
+     add/index.html -- keep them identical). It is only reached when the phone did NOT open the app
+     itself: the app is not installed, or iOS/Android chose the browser for this link.
+
+     The hand-over to the app is a BUTTON the person taps, not an automatic redirect: iOS Safari
+     ignores (or errors on) a scripted jump to a custom scheme, which is how this page sat on screen
+     on 2026-10-10 with the app installed. A tap is a user gesture, which Safari honours.
+
+     Palette, faces and card are the /get/ page's, which are the app's. -->
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background: #0F1012; color: #F2F2F2; margin: 0; display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; }
-  main { max-width: 480px; text-align: center; }
-  h1 { color: #8780D4; margin: 0 0 12px; font-size: 22px; }
-  p { line-height: 1.5; }
-  .stores { margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .stores a { display: inline-block; padding: 12px 20px; border-radius: 8px; background: #8780D4; color: #0F1012; text-decoration: none; font-weight: 600; }
+  :root {
+    --violet: #8780D4; --violet-dark: #766FBD;
+    --card: #FBFBFB; --bg: #F4F4F7; --ink: #3F3F3F; --muted: #8E8C9C; --line: #E7E7E7;
+    --display: "Host Grotesk", "Albert Sans", system-ui, sans-serif;
+    --body: "Albert Sans", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light only; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+         padding: 24px 16px; background: var(--bg); color: var(--ink); font: 17px/1.5 var(--body); }
+  main { width: 100%; max-width: 420px; background: var(--card); border-radius: 30px; padding: 32px 24px 28px;
+         box-shadow: 0 4px 40px rgba(40, 70, 110, .12); text-align: center; }
+  .icon { width: 72px; height: 72px; border-radius: 50%; display: block; margin: 0 auto 16px; }
+  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 7vw, 2.1rem); line-height: 1.12;
+       letter-spacing: -0.01em; margin: 0 0 8px; }
+  .lede { color: var(--muted); margin: 0 0 24px; }
+  .open { display: block; width: 100%; background: var(--violet); color: #fff; text-decoration: none;
+          font-family: var(--display); font-weight: 500; font-size: 17px; border-radius: 28px; padding: 15px 20px; }
+  .open:active { background: var(--violet-dark); }
+  .get { margin: 24px 0 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+  a { color: var(--violet-dark); }
+  a:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+  [hidden] { display: none !important; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Open in PisteBuddy</h1>
-  <p>If PisteBuddy is installed this link opens it. Otherwise get the app:</p>
-  <div class="stores">
-    <!-- Placeholders: no App Store / Play Store listing exists yet. Point both at the
-         site root until the real listings are live, then swap in the store URLs. -->
-    <a href="https://pistebuddyapp.com">App Store</a>
-    <a href="https://pistebuddyapp.com">Google Play</a>
-  </div>
+  <img class="icon" src="/get-assets/icon.png" alt="" width="72" height="72">
+  <h1 id="title">Friend invite</h1>
+  <p class="lede" id="lede">Open PisteBuddy to add this friend and see each other on the mountain.</p>
+  <a class="open" id="open" href="pistebuddy://">Open PisteBuddy</a>
+  <p class="get">New to PisteBuddy? <a href="/get/?src=invite">Get the app</a></p>
 </main>
 <script>
-  // Belt-and-braces fallback for devices where Android App Link verification
-  // failed (so the OS opened this page in a browser instead of the app
-  // directly). Only fire when there is actually a token in the path — an
-  // empty /add/ has nothing to hand the app.
   (function () {
-    var token = location.pathname.split('/add/')[1];
+    var token = (location.pathname.split('/add/')[1] || '').replace(/\/+$/, '');
     if (token) {
-      setTimeout(function () {
-        location.replace('pistebuddy://add/' + token);
-      }, 300);
+      document.getElementById('open').href = 'pistebuddy://add/' + token;
+    } else {
+      // A bare /add/ (or any other missing page) carries nothing to hand the app.
+      document.getElementById('title').textContent = 'Link not found';
+      document.getElementById('lede').textContent = 'This invite link is incomplete. Ask your friend to send it again.';
+      document.getElementById('open').hidden = true;
     }
   })();
 </script>
