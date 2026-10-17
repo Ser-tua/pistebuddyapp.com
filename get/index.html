@@ -2,56 +2,82 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Get PisteBuddy</title>
-<meta name="description" content="Ski and snowboard navigation for iPhone and Android.">
+<title>PisteBuddy</title>
+<meta name="description" content="Ski and snowboard navigation for iPhone and Android. Register your interest.">
 <link rel="icon" href="/get-assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;700&family=Host+Grotesk:wght@500;600&display=swap" rel="stylesheet">
-<!-- Served at /get/ by GitHub Pages as a folder index: no redirect, so ?src= arrives untouched
-     (/get without the slash also works, through Pages' own redirect). The store
-     addresses live in /get-assets/config.js and nowhere else. Palette and faces are the app's and
-     pistebuddy.online's (CLAUDE.md). -->
+<!-- TEMPORARY (2026-10-17, Brad): the flyer's own picture with a "register interest" box, while the
+     app is in App Store review. Revert this commit at launch, when config.js gets the store URLs.
+     The redirect below is unchanged: a phone whose store is live never sees this page.
+     Hero = the flyer PDF cropped to x 227..1020, y 0..1450 pt; logo = its bottom-left lockup. -->
 <style>
   :root {
     --violet: #8780D4; --violet-dark: #766FBD; --violet-tint: #EDECF8;
-    --card: #FBFBFB; --bg: #F4F4F7; --ink: #3F3F3F; --muted: #8E8C9C; --line: #E7E7E7;
+    --card: #FFFFFF; --bg: #FFFFFF; --ink: #3F3F3F; --muted: #8E8C9C; --line: #E7E7E7;
     --display: "Host Grotesk", "Albert Sans", system-ui, sans-serif;
     --body: "Albert Sans", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   html { color-scheme: light only; }
   html.redirecting body { visibility: hidden; }
-  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
-         padding: 24px 16px; background: var(--bg); color: var(--ink); font: 17px/1.5 var(--body); }
-  main { width: 100%; max-width: 420px; background: var(--card); border-radius: 30px; padding: 32px 24px 28px;
-         box-shadow: 0 4px 40px rgba(40, 70, 110, .12); text-align: center; }
-  .icon { width: 72px; height: 72px; border-radius: 50%; display: block; margin: 0 auto 16px; } /* the image is a violet disc on black */
-  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 7vw, 2.1rem); line-height: 1.12;
-       letter-spacing: -0.01em; margin: 0 0 8px; }
-  .lede { color: var(--muted); margin: 0 0 24px; }
-  .stores { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .badge { display: inline-block; line-height: 0; border-radius: 8px; }
-  .badge img { height: 48px; width: auto; }
-  .badge.play img { height: 70px; margin: -11px 0; } /* Google's PNG carries its own padding */
-  .soon { display: inline-block; background: var(--violet-tint); color: var(--violet-dark); font-weight: 500;
-          border-radius: 28px; padding: 10px 18px; font-size: 15px; }
-  .soon-store { color: var(--muted); font-size: 15px; margin: 0; }
-  .qr { margin: 28px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
-  .qr p { margin: 0 0 12px; color: var(--muted); font-size: 15px; }
-  .qr img { width: 168px; height: 168px; display: block; margin: 0 auto; background: #fff; border-radius: 12px; }
-  .more { margin: 24px 0 0; font-size: 15px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.5 var(--body); }
+  /* ONE SCREEN: the picture is cropped from the top (sky) just enough that the phone outline's
+     bottom edge, at 80.7% of the picture (147.5% of its width), lands right above the box and the box
+     ends at the bottom of the screen. cqw = 1% of the page's width, so this holds on desktop too. */
+  .page { position: relative; max-width: 480px; margin: 0 auto; container-type: inline-size; overflow: hidden;
+          --boxh: 262px; --gap: 10px; min-height: 100svh; }
+  .hero { display: block; width: 100%; height: auto;
+          margin-top: clamp(-130px, calc(100svh - var(--boxh) - var(--gap) - 16px - 147.5cqw), 0px);
+          -webkit-mask-image: linear-gradient(#000 88%, transparent); mask-image: linear-gradient(#000 88%, transparent); }
+  .box { position: relative; margin: calc(var(--gap) - 35.3cqw) 16px 16px; background: var(--card); border-radius: 26px;
+         padding: 18px 20px 14px; box-shadow: 0 4px 40px rgba(40, 70, 110, .18); text-align: center; }
+  .logo { display: block; width: 148px; height: auto; margin: 0 auto 8px; }
+  .sub { color: var(--muted); margin: 0 0 12px; font-size: 14px; }
+  form { display: flex; flex-direction: column; gap: 8px; }
+  input[type=email] { width: 100%; font: 16px var(--body); color: var(--ink); background: #fff;
+       border: 1px solid var(--line); border-radius: 24px; padding: 11px 16px; text-align: center; }
+  input[type=email]:focus { outline: none; border-color: var(--violet); box-shadow: 0 0 0 3px var(--violet-tint); }
+  button { font: 500 16px var(--display); color: #fff; background: var(--violet); border: 0;
+       border-radius: 24px; padding: 12px 16px; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: default; }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .msg { font-size: 14px; margin: 8px 0 0; color: #C0392B; }
+  .done { background: var(--violet-tint); color: var(--violet-dark); border-radius: 20px; padding: 14px;
+          font-weight: 500; margin: 0; }
+  .privacy { color: var(--muted); font-size: 12.5px; margin: 10px 0 0; }
+  /* Entrance: the box fades up once the picture is there. */
+  @keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+  .box { animation: rise .8s cubic-bezier(.2, .8, .2, 1) .2s both; }
+  /* Pearlescence on the violets: a slow iridescent sheen laid over the violet, never replacing it. */
+  @keyframes pearl { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+  .pearl { position: relative; isolation: isolate; overflow: hidden; }
+  .pearl::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(115deg, rgba(255,255,255,0) 10%, rgba(255,214,245,.55) 30%, rgba(190,236,255,.6) 42%,
+                rgba(255,255,255,.75) 50%, rgba(214,200,255,.55) 60%, rgba(255,226,206,.45) 72%, rgba(255,255,255,0) 90%);
+    background-size: 300% 100%; mix-blend-mode: soft-light; animation: pearl 16s ease-in-out infinite alternate; }
+  /* The button needs a stronger sheen than the tile to read on a large flat violet. */
+  button.pearl::after { mix-blend-mode: normal; opacity: .55;
+    background: linear-gradient(115deg, rgba(255,255,255,0) 20%, rgba(255,190,240,.55) 34%, rgba(170,230,255,.65) 44%,
+                rgba(255,255,255,.85) 50%, rgba(200,185,255,.6) 57%, rgba(255,215,190,.5) 66%, rgba(255,255,255,0) 80%);
+    background-size: 250% 100%; animation-duration: 12s; }
+  button.pearl > span { position: relative; z-index: 1; }
+  .logo-wrap { position: relative; width: 148px; margin: 0 auto 8px; }
+  .logo-wrap .logo { margin: 0; }
+  /* The violet tile in the lockup: x 2.4..32.7%, y 6.8..92.9% of the image, corners ~8px. */
+  .logo-wrap .tile { position: absolute; left: 2.4%; width: 30.3%; top: 6.8%; height: 86.1%; border-radius: 8px; }
+  @media (prefers-reduced-motion: reduce) { .box, .pearl::after { animation: none; } }
   a { color: var(--violet-dark); }
-  a:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
   [hidden] { display: none !important; }
 </style>
 <script src="/get-assets/config.js"></script>
 <script src="/get-assets/platform.js"></script>
 <script>
   // Decided here, in <head>, before the page is drawn: a phone whose store is live never sees it.
-  // location.replace leaves this page out of the history, so Back does not bounce into the store again.
   (function () {
     var d;
     try {
@@ -60,57 +86,61 @@
         PB_GET_CONFIG,
         location.search
       );
-    } catch (e) { return; } // anything wrong: the page shows, with its links
+    } catch (e) { return; }
     window.PB_GET_DECISION = d;
     if (d.action === 'redirect') {
       document.documentElement.className = 'redirecting';
       location.replace(d.url);
-      // Some in-app browsers refuse to open a store: after a moment, show the page instead.
       setTimeout(function () { document.documentElement.className = ''; }, 2500);
     }
   })();
 </script>
 </head>
 <body>
-<main>
-  <img class="icon" src="/get-assets/icon.png" alt="" width="72" height="72">
-  <h1>Get PisteBuddy</h1>
-  <p class="lede">Ski and snowboard navigation for iPhone and Android.</p>
-
-  <div class="stores" id="stores">
-    <p class="soon" id="soon-both" hidden>Coming soon for the 2026/27 season</p>
-    <a class="badge" id="ios" hidden href="#"><img src="/get-assets/app-store-badge.svg" alt="Download on the App Store"></a>
-    <p class="soon-store" id="ios-soon" hidden>App Store: coming soon for the 2026/27 season</p>
-    <a class="badge play" id="android" hidden href="#"><img src="/get-assets/google-play-badge.png" alt="Get it on Google Play"></a>
-    <p class="soon-store" id="android-soon" hidden>Google Play: coming soon for the 2026/27 season</p>
-  </div>
-
-  <div class="qr" id="qr" hidden>
-    <p>On a computer? Scan with your phone.</p>
-    <img src="/get-assets/qr.svg" alt="QR code for this page">
-  </div>
-
-  <noscript>
-    <!-- Without JavaScript nothing can be decided, so both stores are listed. KEEP IN STEP WITH
-         config.js: platform.test.js fails if these disagree with it. A store with no address is a
-         <span>, never an <a> to nowhere. -->
-    <div class="stores">
-      <span class="soon-store" data-store="ios">App Store: coming soon for the 2026/27 season</span>
-      <span class="soon-store" data-store="android">Google Play: coming soon for the 2026/27 season</span>
-    </div>
-  </noscript>
-
-  <p class="more"><a href="https://pistebuddy.online">More about PisteBuddy</a></p>
-</main>
+<div class="page">
+  <img class="hero" src="/get-assets/hero.jpg" width="1269" height="2320"
+       alt="A skier above a snowy valley, with PisteBuddy's map pins drawn over the view. Mountains, mapped.">
+  <section class="box" id="box">
+    <div class="logo-wrap"><img class="logo" src="/get-assets/logo-lockup.png" alt="PisteBuddy" width="840" height="296"><span class="tile pearl" aria-hidden="true"></span></div>
+    <p class="sub">Registration of interest. No spam, no newsletters.</p>
+    <form id="form" novalidate>
+      <label class="hp" aria-hidden="true">Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <input type="email" name="email" id="email" placeholder="Email address" autocomplete="email"
+             inputmode="email" required aria-label="Email address">
+      <button type="submit" id="btn" class="pearl"><span id="btn-label">Register interest</span></button>
+    </form>
+    <p class="msg" id="msg" role="status" hidden></p>
+    <p class="privacy">Only used to tell you when we launch. <a href="https://pistebuddy.online/privacy/">Privacy Policy</a></p>
+  </section>
+</div>
 <script>
   (function () {
-    var d = window.PB_GET_DECISION;
-    if (!d) return; // the decision failed: the <noscript> block is not shown either, so say something
-    var show = function (id) { document.getElementById(id).hidden = false; };
-    if (!d.ios && !d.android) { show('soon-both'); return; }
-    if (d.ios) { document.getElementById('ios').href = d.ios; show('ios'); } else show('ios-soon');
-    if (d.android) { document.getElementById('android').href = d.android; show('android'); } else show('android-soon');
-    if (d.platform === 'other') show('qr');
+    var box = document.getElementById('box'), form = document.getElementById('form');
+    var btn = document.getElementById('btn'), msg = document.getElementById('msg'), input = document.getElementById('email');
+    var EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    var thanks = function () { form.outerHTML = '<p class="done">Thanks, you’re on the list.</p>'; msg.hidden = true; };
+    var say = function (t) { msg.textContent = t; msg.hidden = false; };
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.website.value) { thanks(); return; } // a bot filled the hidden field
+      var email = input.value.trim();
+      if (!EMAIL.test(email)) { say('Please enter a valid email address.'); return; }
+      btn.disabled = true; document.getElementById('btn-label').textContent = 'Sending…'; msg.hidden = true;
+      var src = (window.PBGet && PBGet.campaign(location.search)) || null;
+      fetch('https://eakfweipboojkhlpgydk.supabase.co/rest/v1/rpc/join_launch_list', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: 'sb_publishable_TQGqabujfco4jZbwFlVxEA_ywlHL6bi', Authorization: 'Bearer sb_publishable_TQGqabujfco4jZbwFlVxEA_ywlHL6bi' },
+        body: JSON.stringify({ p_email: email, p_src: src })
+      }).then(function (r) {
+        if (r.ok) { thanks(); return; }
+        return r.json().catch(function () { return {}; }).then(function (j) {
+          throw new Error(/invalid_email/.test((j && j.message) || '') ? 'Please enter a valid email address.' : 'Something went wrong. Please try again.');
+        });
+      }).catch(function (err) {
+        btn.disabled = false; document.getElementById('btn-label').textContent = 'Register interest';
+        say(err && /email|wrong/.test(err.message || '') ? err.message : 'No connection. Please try again.');
+      });
+    });
   })();
 </script>
 </body>
