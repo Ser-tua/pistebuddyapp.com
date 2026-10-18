@@ -118,6 +118,14 @@
     var box = document.getElementById('box'), form = document.getElementById('form');
     var btn = document.getElementById('btn'), msg = document.getElementById('msg'), input = document.getElementById('email');
     var EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    // Count the visit (a QR scan): campaign tag and time only, nothing about the visitor.
+    try {
+      fetch('https://eakfweipboojkhlpgydk.supabase.co/rest/v1/rpc/log_launch_visit', {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/json', apikey: 'sb_publishable_TQGqabujfco4jZbwFlVxEA_ywlHL6bi', Authorization: 'Bearer sb_publishable_TQGqabujfco4jZbwFlVxEA_ywlHL6bi' },
+        body: JSON.stringify({ p_src: (window.PBGet && PBGet.campaign(location.search)) || null })
+      }).catch(function () {});
+    } catch (e) {}
     var thanks = function () { form.outerHTML = '<p class="done">Thanks, you’re on the list.</p>'; msg.hidden = true; };
     var say = function (t) { msg.textContent = t; msg.hidden = false; };
     form.addEventListener('submit', function (e) {
