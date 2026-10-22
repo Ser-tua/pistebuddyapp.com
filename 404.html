@@ -57,6 +57,18 @@
     var token = (location.pathname.split('/add/')[1] || '').replace(/\/+$/, '');
     if (token) {
       document.getElementById('open').href = 'pistebuddy://add/' + token;
+      // Android: open the app straight away (Brad, 2026-10-22). A scanned QR code often opens this
+      // page in Chrome instead of the app, and Chrome never hands a page it is showing over to an
+      // App Link. An intent:// address does get handed over: Chrome opens PisteBuddy with the
+      // friend code, or, with no app installed, goes to the Play listing instead. The button stays
+      // as the fallback if the browser refuses to open the app without a tap.
+      // iPhone is left to Universal Links: there, a custom-scheme jump with no app installed shows
+      // Safari's "cannot open the page" error.
+      if (/android/i.test(navigator.userAgent) && /^[A-Za-z0-9_-]+$/.test(token)) {
+        var play = 'https://play.google.com/store/apps/details?id=com.pistebuddy.app';
+        location.replace('intent://add/' + token + '#Intent;scheme=pistebuddy;package=com.pistebuddy.app;' +
+          'S.browser_fallback_url=' + encodeURIComponent(play) + ';end');
+      }
     } else {
       // A bare /add/ (or any other missing page) carries nothing to hand the app.
       document.getElementById('title').textContent = 'Link not found';
