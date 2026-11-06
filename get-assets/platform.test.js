@@ -111,3 +111,11 @@ test('the <noscript> links in get/index.html match config.js', () => {
     }
   }
 });
+
+test('the visit is counted before a phone is sent to its store', () => {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'get', 'index.html'), 'utf8');
+  const count = html.indexOf('log_launch_visit');
+  assert.ok(count > 0, 'the page no longer counts visits');
+  assert.ok(count < html.indexOf('location.replace(d.url)'), 'the redirect runs before the count');
+  assert.ok(html.indexOf('keepalive: true') > count, 'the count must survive the redirect');
+});

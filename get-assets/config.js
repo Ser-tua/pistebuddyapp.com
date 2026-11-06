@@ -9,8 +9,8 @@
 //     generated campaign link). Leave '' to send no pt.
 (function (root) {
   var config = {
-    appStoreUrl: '',
-    playStoreUrl: '',
+    appStoreUrl: 'https://apps.apple.com/app/id6814235128',
+    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.pistebuddy.app',
     appStoreProviderToken: '',
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = config;
